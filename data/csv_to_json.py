@@ -18,6 +18,7 @@ def csv_to_json(csv_file_path: str, json_file_path: str, model: str) -> str:
     # read csv file and add to dictionary
     with open(csv_file_path, encoding='utf-8') as file:
         reader = csv.DictReader(file)
+
         data: list = [
             {'model': model,
              'pk': int(row['id']) if row.get('id') else int(row['Id']),
