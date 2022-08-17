@@ -5,7 +5,7 @@ from ads.models.category import Category
 
 class Ad(models.Model):
     author = models.CharField(max_length=200)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=30)
     price = models.PositiveIntegerField(default=0)
     description = models.TextField(max_length=2000)
     address = models.CharField(max_length=200)
