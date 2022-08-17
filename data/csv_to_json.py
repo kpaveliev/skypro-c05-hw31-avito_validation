@@ -2,13 +2,21 @@ import csv, json
 
 
 # Params
-csv_file_ads = 'ads.csv'
+csv_file_ads = 'ad.csv'
 json_file_ads = '../ads/fixtures/ads.json'
 ads_model = 'ads.ad'
 
-csv_file_catetories = 'categories.csv'
+csv_file_catetories = 'category.csv'
 json_file_categories = '../ads/fixtures/categories.json'
 categories_model = 'ads.category'
+
+csv_file_locations = 'location.csv'
+json_file_locations = '../ads/fixtures/locations.json'
+locations_model = 'ads.location'
+
+csv_file_users = 'user.csv'
+json_file_users = '../ads/fixtures/users.json'
+users_model = 'ads.user'
 
 
 # Functions
@@ -41,11 +49,12 @@ def replace_values(value):
         return int(value)
     if value == 'TRUE' or value == 'FALSE':
         return bool(value)
-
     return value
 
 
 if __name__ == '__main__':
-    print(csv_to_json(csv_file_ads, json_file_ads, ads_model))
     print(csv_to_json(csv_file_catetories, json_file_categories, categories_model))
+    print(csv_to_json(csv_file_ads, json_file_ads, ads_model))
+    print(csv_to_json(csv_file_locations, json_file_locations, locations_model))
+    print(csv_to_json(csv_file_users, json_file_users, users_model))
 

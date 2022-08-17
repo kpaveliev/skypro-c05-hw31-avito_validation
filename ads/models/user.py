@@ -1,6 +1,6 @@
 from django.db import models
 
-from ads.models import Location
+from ads.models.location import Location
 
 
 class User(models.Model):

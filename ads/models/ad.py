@@ -1,11 +1,12 @@
 from django.db import models
 
+from ads.models.user import User
 from ads.models.category import Category
 
 
 class Ad(models.Model):
-    author = models.CharField(max_length=200)
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=100)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     price = models.PositiveIntegerField(default=0)
     description = models.TextField(max_length=2000)
     address = models.CharField(max_length=200)
