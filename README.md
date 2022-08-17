@@ -1,5 +1,5 @@
 # SkyPro.Python course
-## HW27. Avito - simple Django app
+## HW28. Avito - simple Django app with postgres
 
 **Create fixtures and load data**
 
