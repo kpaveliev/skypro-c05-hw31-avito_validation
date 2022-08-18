@@ -5,23 +5,29 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 
-from ads.models import Category
+from ads.models import User
 
 
-class CategoryListView(ListView):
-    """Show all categories"""
-    model = Category
+class UserListView(ListView):
+    """Show all users"""
+    model = User
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
-        categories = self.object_list
+        users = self.object_list
 
         response = [
             {
-                'id': category.id,
-                'name': category.name
+                'id': user.id,
+                'username': user.username,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'role': user.role,
+                'age': user.age,
+                'location_id': user.location_id,
+                'location': str(user.location)
             }
-            for category in categories
+            for user in users
         ]
 
         return JsonResponse(response,
@@ -29,16 +35,22 @@ class CategoryListView(ListView):
                             json_dumps_params={"ensure_ascii": False})
 
 
-class CategoryDetailView(DetailView):
-    """Show category by id"""
-    model = Category
+class UserDetailView(DetailView):
+    """Show user by id"""
+    model = User
 
     def get(self, *args, **kwargs):
-        category = self.get_object()
+        user = self.get_object()
 
         response = {
-                'id': category.id,
-                'name': category.name
+                'id': user.id,
+                'username': user.username,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'role': user.role,
+                'age': user.age,
+                'location_id': user.location_id,
+                'location': str(user.location)
         }
 
         return JsonResponse(response,
@@ -46,22 +58,32 @@ class CategoryDetailView(DetailView):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class CategoryUpdateView(UpdateView):
-    model = Category
-    fields = ['name']
+class UserUpdateView(UpdateView):
+    model = User
+    fields = ['username', 'first_name', 'last_name', 'role', 'password', 'age', 'location']
 
     def patch(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
-        category_data = json.loads(request.body)
-        category = self.object
+        user_data = json.loads(request.body)
+        user = self.object
 
-        category.name = category_data.get('name')
+        user.password = user_data.get('password')
+        user.first_name = user_data.get('first_name')
+        user.last_name = user_data.get('last_name')
+        user.age = user_data.get('age')
+        user.location_id = user_data.get('location_id')
 
-        category.save()
+        user.save()
 
         response = {
-            'id': category.id,
-            'name': category.name
+            'id': user.id,
+            'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'role': user.role,
+            'age': user.age,
+            'location_id': user.location_id,
+            'location': str(user.location)
         }
 
         return JsonResponse(response,
@@ -69,8 +91,8 @@ class CategoryUpdateView(UpdateView):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class CategoryDeleteView(DeleteView):
-    model = Category
+class UserDeleteView(DeleteView):
+    model = User
     success_url = '/'
 
     def delete(self, request, *args, **kwargs):
@@ -81,18 +103,24 @@ class CategoryDeleteView(DeleteView):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class CategoryCreateView(CreateView):
-    """Create category"""
-    model = Category
-    fields = ['name']
+class UserCreateView(CreateView):
+    """Create user"""
+    model = User
+    fields = ['username', 'first_name', 'last_name', 'role', 'password', 'age', 'location']
 
     def post(self, request, *args, **kwargs):
-        category_data = json.loads(request.body)
-        category = Category.objects.create(**category_data)
+        user_data = json.loads(request.body)
+        user = User.objects.create(**user_data)
 
         response = {
-                'id': category.id,
-                'name': category.name
+                'id': user.id,
+                'username': user.username,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'role': user.role,
+                'age': user.age,
+                'location_id': user.location_id,
+                'location': str(user.location)
         }
 
         return JsonResponse(response,
