@@ -14,7 +14,7 @@ class CategoryListView(ListView):
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
-        categories = self.object_list
+        categories = self.object_list.order_by('name')
 
         response = [
             {

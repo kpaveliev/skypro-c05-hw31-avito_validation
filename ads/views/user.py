@@ -71,7 +71,8 @@ class UserUpdateView(UpdateView):
         user.first_name = user_data.get('first_name')
         user.last_name = user_data.get('last_name')
         user.age = user_data.get('age')
-        user.location_id = user_data.get('location_id')
+        location, created = Location.objects.get_or_create(name=user_data.get('location'))
+        user.location = location
 
         user.save()
 
