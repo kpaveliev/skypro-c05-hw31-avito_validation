@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 
-from ads.models import User
+from ads.models import User, Location
 
 
 class UserListView(ListView):
@@ -110,7 +110,18 @@ class UserCreateView(CreateView):
 
     def post(self, request, *args, **kwargs):
         user_data = json.loads(request.body)
-        user = User.objects.create(**user_data)
+        user = User.objects.create(
+            username=user_data.get('username'),
+            first_name=user_data.get('first_name'),
+            last_name=user_data.get('last_name'),
+            role=user_data.get('role'),
+            password=user_data.get('password'),
+            age=user_data.get('age')
+        )
+
+        location, created = Location.objects.get_or_create(name=user_data.get('location'))
+        user.location = location
+        user.save()
 
         response = {
                 'id': user.id,
