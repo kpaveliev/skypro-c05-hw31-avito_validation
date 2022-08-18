@@ -7,7 +7,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 
-from ads.models import Ad, User, Category
+from ads.models import Ad, Category
+from users.models import User
 from project.settings import TOTAL_ON_PAGE
 
 

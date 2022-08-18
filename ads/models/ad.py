@@ -1,6 +1,6 @@
 from django.db import models
 
-from ads.models.user import User
+from users.models import User
 from ads.models.category import Category
 
 

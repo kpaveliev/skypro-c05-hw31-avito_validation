@@ -16,7 +16,7 @@ locations_model = 'ads.location'
 
 csv_file_users = 'user.csv'
 json_file_users = '../ads/fixtures/users.json'
-users_model = 'ads.user'
+users_model = 'users.user'
 
 
 # Functions
