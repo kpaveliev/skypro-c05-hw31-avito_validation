@@ -2,11 +2,12 @@ import json
 
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 
-from ads.models import Ad
+from ads.models import Ad, User, Category
 from project.settings import TOTAL_ON_PAGE
 
 
@@ -151,7 +152,16 @@ class AdCreateView(CreateView):
 
     def post(self, request, *args, **kwargs):
         ad_data = json.loads(request.body)
-        ad = Ad.objects.create(**ad_data)
+        ad = Ad.objects.create(
+            name=ad_data.get('name'),
+            price=ad_data.get('price'),
+            description=ad_data.get('description'),
+            is_published=ad_data.get('is_published')
+        )
+
+        ad.author = get_object_or_404(User, pk=ad_data.get('author_id'))
+        ad.category = get_object_or_404(Category, pk=ad_data.get('category_id'))
+        ad.save()
 
         response = {
             'id': ad.id,
