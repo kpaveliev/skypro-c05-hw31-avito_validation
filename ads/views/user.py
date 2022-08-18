@@ -17,11 +17,11 @@ class UserListView(ListView):
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
-        users = self.object_list.annotate(
-            ads_published=Count('ad', filter=Q(ad__is_published__gte=True))
-        )
-        print(users)
-
+        users = (self
+                 .object_list
+                 .annotate(ads_published=Count('ad', filter=Q(ad__is_published__gte=True)))
+                 .select_related('location')
+                 )
         # Add pagination
         paginator = Paginator(users, TOTAL_ON_PAGE)
         page_number = request.GET.get('page')
