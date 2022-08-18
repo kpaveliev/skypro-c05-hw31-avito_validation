@@ -3,7 +3,7 @@ import json
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import DetailView, ListView, CreateView
+from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 
 from ads.models import Ad
 
@@ -52,6 +52,50 @@ class AdDetailView(DetailView):
 
         return JsonResponse(response,
                             json_dumps_params={"ensure_ascii": False})
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class AdUpdateView(UpdateView):
+    model = Ad
+    fields = ['name', 'price', 'description', 'is_published', 'image', 'category']
+
+    def patch(self, request, *args, **kwargs):
+        super().post(request, *args, **kwargs)
+        ad_data = json.loads(request.body)
+        ad = self.object
+
+        ad.name = ad_data.get('name')
+        ad.price = ad_data.get('price')
+        ad.description = ad_data.get('description')
+        ad.is_published = ad_data.get('is_published')
+        ad.category_id = ad_data.get('category_id')
+
+        ad.save()
+
+        response = {
+            'id': ad.id,
+            'author': str(ad.author),
+            'name': ad.name,
+            'price': ad.price,
+            'description': ad.description,
+            'is_published': ad.is_published,
+            'category': str(ad.category)
+        }
+
+        return JsonResponse(response,
+                            json_dumps_params={"ensure_ascii": False})
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class AdDeleteView(DeleteView):
+    model = Ad
+    success_url = '/'
+
+    def delete(self, request, *args, **kwargs):
+        super().delete(request, *args, **kwargs)
+
+        return JsonResponse({'status': 'OK'},
+                            status=200)
 
 
 @method_decorator(csrf_exempt, name='dispatch')
