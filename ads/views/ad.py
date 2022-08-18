@@ -19,11 +19,14 @@ class AdListView(ListView):
         response = [
             {
                 'id': ad.id,
+                'author_id': ad.author_id,
                 'author': str(ad.author),
                 'name': ad.name,
                 'price': ad.price,
                 'description': ad.description,
                 'is_published': ad.is_published,
+                'image': ad.image,
+                'category_id': ad.category_id,
                 'category': str(ad.category)
             }
             for ad in ads
@@ -41,13 +44,16 @@ class AdDetailView(DetailView):
         ad = self.get_object()
 
         response = {
-                'id': ad.id,
-                'author': str(ad.author),
-                'name': ad.name,
-                'price': ad.price,
-                'description': ad.description,
-                'is_published': ad.is_published,
-                'category': str(ad.category)
+            'id': ad.id,
+            'author_id': ad.author_id,
+            'author': str(ad.author),
+            'name': ad.name,
+            'price': ad.price,
+            'description': ad.description,
+            'is_published': ad.is_published,
+            'image': ad.image,
+            'category_id': ad.category_id,
+            'category': str(ad.category)
         }
 
         return JsonResponse(response,
@@ -74,11 +80,14 @@ class AdUpdateView(UpdateView):
 
         response = {
             'id': ad.id,
+            'author_id': ad.author_id,
             'author': str(ad.author),
             'name': ad.name,
             'price': ad.price,
             'description': ad.description,
             'is_published': ad.is_published,
+            'image': ad.image,
+            'category_id': ad.category_id,
             'category': str(ad.category)
         }
 
@@ -108,13 +117,16 @@ class AdCreateView(CreateView):
         ad = Ad.objects.create(**ad_data)
 
         response = {
-                'id': ad.id,
-                'author': str(ad.author),
-                'name': ad.name,
-                'price': ad.price,
-                'description': ad.description,
-                'is_published': ad.is_published,
-                'category': str(ad.category)
+            'id': ad.id,
+            'author_id': ad.author_id,
+            'author': str(ad.author),
+            'name': ad.name,
+            'price': ad.price,
+            'description': ad.description,
+            'is_published': ad.is_published,
+            'image': ad.image,
+            'category_id': ad.category_id,
+            'category': str(ad.category)
         }
 
         return JsonResponse(response,
