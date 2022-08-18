@@ -25,7 +25,7 @@ class AdListView(ListView):
                 'price': ad.price,
                 'description': ad.description,
                 'is_published': ad.is_published,
-                'image': ad.image,
+                'image': ad.image.url if ad.image else None,
                 'category_id': ad.category_id,
                 'category': str(ad.category)
             }
@@ -51,7 +51,7 @@ class AdDetailView(DetailView):
             'price': ad.price,
             'description': ad.description,
             'is_published': ad.is_published,
-            'image': ad.image,
+            'image': ad.image.url if ad.image else None,
             'category_id': ad.category_id,
             'category': str(ad.category)
         }
@@ -86,7 +86,7 @@ class AdUpdateView(UpdateView):
             'price': ad.price,
             'description': ad.description,
             'is_published': ad.is_published,
-            'image': ad.image,
+            'image': ad.image.url if ad.image else None,
             'category_id': ad.category_id,
             'category': str(ad.category)
         }
@@ -124,7 +124,7 @@ class AdCreateView(CreateView):
             'price': ad.price,
             'description': ad.description,
             'is_published': ad.is_published,
-            'image': ad.image,
+            'image': ad.image.url if ad.image else None,
             'category_id': ad.category_id,
             'category': str(ad.category)
         }

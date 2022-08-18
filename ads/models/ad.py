@@ -10,7 +10,7 @@ class Ad(models.Model):
     price = models.PositiveIntegerField(default=0)
     description = models.TextField(max_length=2000)
     is_published = models.BooleanField(default=None)
-    image = models.ImageField(upload_to='logos/')
+    image = models.ImageField(upload_to='images/')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
 
     class Meta:
