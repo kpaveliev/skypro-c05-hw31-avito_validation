@@ -1,11 +1,12 @@
 from .ad import AdView, AdDetailView
-from .category import CategoryView, CategoryDetailView
+from .category import CategoryListView, CategoryDetailView, CategoryCreateView
 from .index import index
 
 __all__ = [
     'AdView',
     'AdDetailView',
-    'CategoryView',
+    'CategoryListView',
     'CategoryDetailView',
+    'CategoryCreateView',
     'index'
 ]
