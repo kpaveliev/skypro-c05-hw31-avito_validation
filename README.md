@@ -1,22 +1,29 @@
 # SkyPro.Python course
 ## HW28. Avito - simple Django app with postgres
 
-**Create fixtures and load data**
+### Project is ready to start locally
 
-1. Move to folder "data" (csv files with data are located there)
-2. Execute 'python3 csv_to_json.py' (gets data from csv files, converts into json and puts into fixtures folder)
-3. Return to project folder and execute the following commands:
-   'python3 manage.py loaddata locations.json'
-   'python3 manage.py loaddata users.json'
-   'python3 manage.py loaddata categories.json'
-   'python3 manage.py loaddata ads.json'
+1. Start postgres database `docker-compose up -d`
+2. Data are loaded (volume is in pg_data)
+3. To access admin
+```
+user: skypro
+password: 1234
+```
 
-**Available routes and methods**
+### To start project from scratch
 
-1. /ad/ - GET, POST
-2. /ad/<pk> - GET
-3. /cat/ - GET, POST
-4. /cat/<pk>/ - GET
+1. Delete postgres volume (pg_data)
+2. Delete migrations from apps (users, ads)
+3. Start postgres database `docker-compose up -d`
+4. Create fixtures (run csv_to_json script in /data)
+5. Load fixtures (in the order showed)
+```
+./manage.py loaddata locations.json'
+./manage.py loaddata users.json'
+./manage.py loaddata categories.json'
+./manage.py loaddata ads.json'
+```
 
 Kirill Paveliev/
 August 2022
