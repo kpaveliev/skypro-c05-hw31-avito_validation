@@ -96,6 +96,34 @@ class AdUpdateView(UpdateView):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
+class AdImageView(UpdateView):
+    model = Ad
+    fields = ['name', 'image']
+
+    def post(self, request, *args, **kwargs):
+
+        ad = self.get_object()
+        ad.image = request.FILES['image']
+        ad.save()
+
+        response = {
+            'id': ad.id,
+            'author_id': ad.author_id,
+            'author': str(ad.author),
+            'name': ad.name,
+            'price': ad.price,
+            'description': ad.description,
+            'is_published': ad.is_published,
+            'image': ad.image.url if ad.image else None,
+            'category_id': ad.category_id,
+            'category': str(ad.category)
+        }
+
+        return JsonResponse(response,
+                            json_dumps_params={"ensure_ascii": False})
+
+
+@method_decorator(csrf_exempt, name='dispatch')
 class AdDeleteView(DeleteView):
     model = Ad
     success_url = '/'
