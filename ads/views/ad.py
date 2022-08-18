@@ -1,11 +1,13 @@
 import json
 
+from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 
 from ads.models import Ad
+from project.settings import TOTAL_ON_PAGE
 
 
 class AdListView(ListView):
@@ -16,21 +18,28 @@ class AdListView(ListView):
         super().get(request, *args, **kwargs)
         ads = self.object_list
 
-        response = [
-            {
-                'id': ad.id,
-                'author_id': ad.author_id,
-                'author': str(ad.author),
-                'name': ad.name,
-                'price': ad.price,
-                'description': ad.description,
-                'is_published': ad.is_published,
-                'image': ad.image.url if ad.image else None,
-                'category_id': ad.category_id,
-                'category': str(ad.category)
-            }
-            for ad in ads
-        ]
+        # Add pagination
+        paginator = Paginator(ads, TOTAL_ON_PAGE)
+        page_number = request.GET.get('page')
+        ads_on_page = paginator.get_page(page_number)
+
+        response = {
+            "items": [
+                {
+                    'id': ad.id,
+                    'author_id': ad.author_id,
+                    'author': str(ad.author),
+                    'name': ad.name,
+                    'price': ad.price,
+                    'description': ad.description,
+                    'is_published': ad.is_published,
+                    'image': ad.image.url if ad.image else None,
+                    'category_id': ad.category_id,
+                    'category': str(ad.category)
+                } for ad in ads_on_page],
+            "total": paginator.count,
+            "number_of_pages": paginator.num_pages
+        }
 
         return JsonResponse(response,
                             safe=False,
