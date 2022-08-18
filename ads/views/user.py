@@ -1,11 +1,14 @@
 import json
 
+from django.core.paginator import Paginator
+from django.db.models import Count, Q
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 
 from ads.models import User, Location
+from project.settings import TOTAL_ON_PAGE
 
 
 class UserListView(ListView):
@@ -14,21 +17,32 @@ class UserListView(ListView):
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
-        users = self.object_list
+        users = self.object_list.annotate(
+            ads_published=Count('ad', filter=Q(ad__is_published__gte=True))
+        )
+        print(users)
 
-        response = [
-            {
-                'id': user.id,
-                'username': user.username,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'role': user.role,
-                'age': user.age,
-                'location_id': user.location_id,
-                'location': str(user.location)
-            }
-            for user in users
-        ]
+        # Add pagination
+        paginator = Paginator(users, TOTAL_ON_PAGE)
+        page_number = request.GET.get('page')
+        users_on_page = paginator.get_page(page_number)
+
+        response = {
+            "items": [
+                {
+                    'id': user.id,
+                    'username': user.username,
+                    'first_name': user.first_name,
+                    'last_name': user.last_name,
+                    'role': user.role,
+                    'age': user.age,
+                    'location_id': user.location_id,
+                    'location': str(user.location),
+                    'ads_published': user.ads_published
+                } for user in users_on_page],
+            "total": paginator.count,
+            "number_of_pages": paginator.num_pages
+        }
 
         return JsonResponse(response,
                             safe=False,
@@ -137,5 +151,3 @@ class UserCreateView(CreateView):
 
         return JsonResponse(response,
                             json_dumps_params={"ensure_ascii": False})
-
-
