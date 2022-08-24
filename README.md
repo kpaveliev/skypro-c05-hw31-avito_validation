@@ -1,5 +1,5 @@
 # SkyPro.Python course
-## HW28. Avito - simple Django app with postgres
+## HW29. Avito - simple Django app with DRF
 
 ### Project is ready to start locally
 
