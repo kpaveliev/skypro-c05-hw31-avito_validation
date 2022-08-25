@@ -1,8 +1,14 @@
 from django.urls import path
+from rest_framework import routers
 
 from ads.views import (AdListView, AdDetailView, AdUpdateView, AdImageView, AdDeleteView, AdCreateView,
                        CategoryListView, CategoryDetailView, CategoryUpdateView, CategoryDeleteView, CategoryCreateView,
-                       index)
+                       index, LocationViewSet)
+
+# Register router for DRF urls
+router = routers.SimpleRouter()
+router.register('location', LocationViewSet)
+
 
 urlpatterns = [
     path('', index),
@@ -18,3 +24,5 @@ urlpatterns = [
     path('cat/<int:pk>/delete/', CategoryDeleteView.as_view()),
     path('cat/create/', CategoryCreateView.as_view())
 ]
+
+urlpatterns += router.urls
