@@ -1,5 +1,5 @@
 # SkyPro.Python course
-## HW29. Avito - simple Django app with DRF
+## HW39. Avito - AbstractUser, Authentication and JWT authorization
 
 ### Project is ready to start locally
 

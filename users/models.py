@@ -1,9 +1,10 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 from ads.models.location import Location
 
 
-class User(models.Model):
+class User(AbstractUser):
     ROLES = [
         ('admin', 'администратор'),
         ('member', 'пользователь'),
