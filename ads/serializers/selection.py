@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from ads.models import Selection
-from users.models import User
 
 
 class SelectionSerializer(serializers.ModelSerializer):

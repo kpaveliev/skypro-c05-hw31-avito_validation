@@ -2,7 +2,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView, DestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from ads.models import Selection
-from ads.permissions import IsCreatedByOrAdminOrModerator, IsCreatedBy
+from ads.permissions import IsCreatedBy
 from ads.serializers import SelectionSerializer, SelectionCreateSerializer, SelectionUpdateSerializer
 
 
