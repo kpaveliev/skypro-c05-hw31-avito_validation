@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from ads.models import Ad
 from ads.permissions import IsCreatedByOrAdminOrModerator
-from ads.serializers.ad import AdSerializer, AdCreateSerializer, AdUpdateSerializer, AdImageSerializer
+from ads.serializers import AdSerializer, AdCreateSerializer, AdUpdateSerializer, AdImageSerializer
 
 
 class AdListView(ListAPIView):
