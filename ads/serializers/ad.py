@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.generics import get_object_or_404
 
 from ads.models import Category, Ad
+from ads.validators import check_not_published
 from users.models import User
 
 
@@ -36,6 +37,8 @@ class AdCreateSerializer(serializers.ModelSerializer):
         queryset=Category.objects.all(),
         slug_field='name'
     )
+
+    is_published = serializers.BooleanField(default=None, validators=[check_not_published])
 
     class Meta:
         model = Ad
