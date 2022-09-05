@@ -1,6 +1,7 @@
 from .ad import AdSerializer, AdCreateSerializer, AdUpdateSerializer, AdImageSerializer
 from .location import LocationSerializer
 from .selection import SelectionSerializer, SelectionCreateSerializer, SelectionUpdateSerializer
+from .category import CategorySerializer
 
 
 __all__ = [
@@ -12,4 +13,5 @@ __all__ = [
     'SelectionSerializer',
     'SelectionCreateSerializer',
     'SelectionUpdateSerializer',
+    'CategorySerializer',
 ]
