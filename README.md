@@ -1,5 +1,5 @@
 # SkyPro.Python course
-## HW39. Avito - AbstractUser, Authentication and JWT authorization
+## HW31. Avito - Validation, tests
 
 ### Project is ready to start locally
 
