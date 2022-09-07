@@ -26,6 +26,8 @@ class AdSerializer(serializers.ModelSerializer):
 class AdCreateSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
     image = serializers.ImageField(required=False)
+    name = serializers.CharField(allow_blank=False, min_length=10, max_length=100)
+    price = serializers.IntegerField(min_value=0, default=0)
 
     author = serializers.SlugRelatedField(
         required=False,
