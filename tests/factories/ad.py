@@ -9,8 +9,9 @@ class AdFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Ad
 
-    name = "test"
+    name = "Test 10 characters minimum"
     price = 1000
+
     is_published = False
     author = factory.SubFactory(UserFactory)
     category = factory.SubFactory(CategoryFactory)

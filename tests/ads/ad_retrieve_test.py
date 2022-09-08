@@ -6,8 +6,8 @@ def test_ad_retrieve(client, ad, user_token):
     expected_response = {
         "id": ad.id,
         "author": ad.author.username,
-        "name": "test",
-        "price": 1000,
+        "name": ad.name,
+        "price": ad.price,
         "description": "",
         "is_published": False,
         "category": ad.category.name,
