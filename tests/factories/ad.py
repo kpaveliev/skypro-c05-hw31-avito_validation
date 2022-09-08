@@ -12,5 +12,5 @@ class AdFactory(factory.django.DjangoModelFactory):
     name = "test"
     price = 1000
     is_published = False
-    user = factory.SubFactory(UserFactory)
+    author = factory.SubFactory(UserFactory)
     category = factory.SubFactory(CategoryFactory)

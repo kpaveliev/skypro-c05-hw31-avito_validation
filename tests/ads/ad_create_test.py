@@ -5,7 +5,7 @@ import pytest
 def test_ad_create(client, user, category):
 
     expected_response = {
-        "id": 1,
+        "id": user.id,
         "image": None,
         "name": "Test 10 characters minimum",
         "price": 2500,
@@ -16,12 +16,12 @@ def test_ad_create(client, user, category):
     }
 
     data = {
-        "author_id": 1,
+        "author_id": user.id,
         "name": "Test 10 characters minimum",
         "price": 2500,
         "description": "Test description",
         "is_published": False,
-        "category_id": 1
+        "category_id": category.id
     }
 
     response = client.post(
